@@ -11,20 +11,20 @@ commands:
         default: "~/.ccidiag"
     steps:
       - run: 
-        name: CircleCI Diag
-        command: |
-          mkdir << parameters.data-dir >> || true
-          dpkg -l > << parameters.data-dir >>/dpkg.log || true
-          yarn list > << parameters.data-dir >>/yarn.log || true
-          brew list --versions > << parameters.data-dir >>/brew.log || true
-          yarn global list > << parameters.data-dir >>/yarn-global.log || true
-          gem query --local > << parameters.data-dir >>/gem.log || true
-          npm --version || true
-          npm ls --global > << parameters.data-dir >>/npm-global.log || true
-          npm ls > << parameters.data-dir >>/npm.log || true
+          name: CircleCI Diag
+          command: |
+            mkdir << parameters.data-dir >> || true
+            dpkg -l > << parameters.data-dir >>/dpkg.log || true
+            yarn list > << parameters.data-dir >>/yarn.log || true
+            brew list --versions > << parameters.data-dir >>/brew.log || true
+            yarn global list > << parameters.data-dir >>/yarn-global.log || true
+            gem query --local > << parameters.data-dir >>/gem.log || true
+            npm --version || true
+            npm ls --global > << parameters.data-dir >>/npm-global.log || true
+            npm ls > << parameters.data-dir >>/npm.log || true
       - store_artifacts:
-          path: << parameters.data-dir >>
-          destination: ccidiag
+            path: << parameters.data-dir >>
+            destination: ccidiag
 
   # WIP - Start up metricbeat in each job to track resource usage over time
   # and view the logs in Kibana
