@@ -3,23 +3,25 @@ version: 2.1
 description: "If you're running this bad things happened"
 
 commands:
-  run:
+  runnit:
     description: "Save information about the job enviroment as artifacts to inspect later"
     parameters:
       data-dir:
         type: string
         default: "~/.ccidiag"
     steps:
-      - run: mkdir << parameters.data-dir >> || true
-      - run: dpkg -l > << parameters.data-dir >>/dpkg.log || true
-      - run: yarn list > << parameters.data-dir >>/yarn.log || true
-      - run: brew list --versions > << parameters.data-dir >>/brew.log || true
-      - run: yarn global list > << parameters.data-dir >>/yarn-global.log || true
-      - run: gem query --local > << parameters.data-dir >>/gem.log || true
-      - run: |
-              npm --version || true
-              npm ls --global > << parameters.data-dir >>/npm-global.log || true
-              npm ls > << parameters.data-dir >>/npm.log || true
+      - run: 
+        name: CircleCI Diag
+        command: |
+          mkdir << parameters.data-dir >> || true
+          dpkg -l > << parameters.data-dir >>/dpkg.log || true
+          yarn list > << parameters.data-dir >>/yarn.log || true
+          brew list --versions > << parameters.data-dir >>/brew.log || true
+          yarn global list > << parameters.data-dir >>/yarn-global.log || true
+          gem query --local > << parameters.data-dir >>/gem.log || true
+          npm --version || true
+          npm ls --global > << parameters.data-dir >>/npm-global.log || true
+          npm ls > << parameters.data-dir >>/npm.log || true
       - store_artifacts:
           path: << parameters.data-dir >>
           destination: ccidiag
@@ -27,7 +29,7 @@ commands:
   # WIP - Start up metricbeat in each job to track resource usage over time
   # and view the logs in Kibana
 
-  # How to try: Sign up for a free elastic stack cloud trial at https://www.elastic.co/cloud
+  # How to try: Sign up for a frefZe elastic stack cloud trial at https://www.elastic.co/cloud
   # After signup you will be given a username, password, and cloud ID. 
   # Save these values as enviroment variables in the UI named: ES_USER, ES_PASSWORD, ES_ID
   # Run the orb as the start your job - diag/metricbeat
